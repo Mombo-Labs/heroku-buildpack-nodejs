@@ -186,5 +186,5 @@ echo "export PATH=\"\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\"" > $BUILD_DIR/.
 
 # optimize clientside javascript sources
  echo "-----> Optimize client side javascript sources"
- node optimize.js
+ node optimize.js | indent
  echo "Client side javascript optimized" | indent
