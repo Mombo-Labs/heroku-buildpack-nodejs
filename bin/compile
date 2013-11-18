@@ -184,12 +184,17 @@ echo "-----> Building runtime environment"
 mkdir -p $BUILD_DIR/.profile.d
 echo "export PATH=\"\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\"" > $BUILD_DIR/.profile.d/nodejs.sh
 
-# optimize clientside javascript sources
+# optimize client-side javascript
 if [ -f $BUILD_DIR/optimize.js ]; then
- echo "-----> Optimize client side javascript sources"
- node optimize.js | indent
- echo "Client side javascript optimized" | indent
+  echo "-----> Optimizing client-side javascript"
+  cd $BUILD_DIR
+  node optimize.js | indent
+  if [ "${PIPESTATUS[*]}" != "0 0" ]; then
+    echo " !     Failed to optimize client-side javascript"
+    exit 1
+  else
+    echo "Client-side javascript optimized" | indent
+  fi
 else
-  echo "-----> No optimizations (optimize.js) found"
+  echo "-----> No client-side javascript optimizations (optimize.js) found"
 fi
- 
